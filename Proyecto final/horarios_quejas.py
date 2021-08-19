@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
 import pandas as pd
+import matplotlib.pyplot as plt
+
 server = 'hxsqldev02\sql2016'
 database = 'Academy_Dev_Data_RFlor'
 driver = 'SQL Server'
@@ -113,5 +115,14 @@ df_horarios = df_horarios.append(df_rp_horarios)
 df_horarios = df_horarios.append(df_qu_horarios)
 df_horarios = df_horarios.groupby(by='nombre').sum()
 
-print(df_horarios)
+df_horarios.sort_values('cant_madrugada',inplace=True)
 
+df_horarios.plot(kind='bar',
+             stacked=False,
+             figsize=(20, 10))
+
+plt.title('Cantidad de tweets por hora por empresa')
+plt.ylabel('Empresa')
+plt.xlabel('Cantidad')
+
+plt.show()
