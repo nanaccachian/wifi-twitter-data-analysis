@@ -13,8 +13,14 @@ df_totales = pd.read_sql_query("""SELECT
                                         (SELECT COUNT(*) FROM dbo.fact_replies where rp_wifi_provider = wp_id) as 'cant_replies'
                                   FROM dbo.dim_wifi_providers
                                   ORDER BY 1 """, engine)
+total = 7248280
 
-df_totales['total'] = df_totales.apply(lambda row: row.cant_tweets + row.cant_replies + row.cant_quotes + row.cant_rts,axis=1)
+df_totales.loc[df_totales.index[2], 'cant_usuarios'] = fib_tot = 0.46*total
+df_totales.loc[df_totales.index[1], 'cant_usuarios'] = fib_tot = 0.01*total
+df_totales.loc[df_totales.index[7], 'cant_usuarios'] = fib_tot = 0.17*total
+df_totales.loc[df_totales.index[9], 'cant_usuarios'] = fib_tot = 0.12*total
 
+df_totales['total'] = df_totales.apply(lambda row: row.cant_tweets + row.cant_replies + row.cant_quotes + row.cant_rts, axis=1)
+df_totales['porcentaje'] = df_totales.apply(lambda row: row.total / row.cant_usuarios, axis=1)
 print(df_totales)
 

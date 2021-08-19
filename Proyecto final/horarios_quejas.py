@@ -46,7 +46,26 @@ df_rt_horarios = pd.read_sql_query("""SELECT
                                             where rt_wifi_provider = wp_id AND ti_hour >= 19 and ti_hour <= 23) as 'cant_noche'
                                   FROM dbo.dim_wifi_providers
                                   ORDER BY 1 """, engine)
-
+df_rt_horarios = pd.read_sql_query("""SELECT 
+                                        wp_name as 'nombre',
+                                        (SELECT COUNT(*) 
+                                            FROM dbo.fact_retweets
+                                            JOIN dim_times dt on fact_retweets.rt_time = dt.ti_id
+                                            where rt_wifi_provider = wp_id AND ti_hour >= 0 and ti_hour <= 5) as 'cant_madrugada',
+                                        (SELECT COUNT(*) 
+                                            FROM dbo.fact_retweets
+                                            JOIN dim_times dt on fact_retweets.rt_time = dt.ti_id
+                                            where rt_wifi_provider = wp_id AND ti_hour >= 6 and ti_hour <= 12) as 'cant_maniana',
+                                        (SELECT COUNT(*) 
+                                            FROM dbo.fact_retweets
+                                            JOIN dim_times dt on fact_retweets.rt_time = dt.ti_id
+                                            where rt_wifi_provider = wp_id AND ti_hour >= 13 and ti_hour <= 18) as 'cant_tarde',
+                                        (SELECT COUNT(*) 
+                                            FROM dbo.fact_retweets
+                                            JOIN dim_times dt on fact_retweets.rt_time = dt.ti_id
+                                            where rt_wifi_provider = wp_id AND ti_hour >= 19 and ti_hour <= 23) as 'cant_noche'
+                                  FROM dbo.dim_wifi_providers
+                                  ORDER BY 1 """, engine)
 df_rp_horarios = pd.read_sql_query("""SELECT 
                                         wp_name as 'nombre',
                                         (SELECT COUNT(*) 
