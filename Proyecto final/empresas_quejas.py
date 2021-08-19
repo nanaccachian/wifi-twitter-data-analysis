@@ -21,6 +21,6 @@ df_totales.loc[df_totales.index[7], 'cant_usuarios'] = fib_tot = 0.17*total
 df_totales.loc[df_totales.index[9], 'cant_usuarios'] = fib_tot = 0.12*total
 
 df_totales['total'] = df_totales.apply(lambda row: row.cant_tweets + row.cant_replies + row.cant_quotes + row.cant_rts, axis=1)
-df_totales['porcentaje'] = df_totales.apply(lambda row: row.total / row.cant_usuarios, axis=1)
+df_totales['porcentaje'] = df_totales.apply(lambda row: "{:.3%}".format(row.total / row.cant_usuarios), axis=1)
 print(df_totales)
 
