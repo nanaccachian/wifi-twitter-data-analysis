@@ -2,7 +2,6 @@ from sqlalchemy import create_engine
 import pandas as pd
 from sentiment_analysis_spanish import sentiment_analysis
 
-
 server = 'hxsqldev02\sql2016'
 database = 'Academy_Dev_Data_RFlor'
 driver = 'SQL Server'
